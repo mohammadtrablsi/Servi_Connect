@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:servi_connect/Features/chat/domain/entites/viewChatEntity.dart';
 import 'package:servi_connect/Features/chat/domain/useCases/viewChatUseCase.dart';
+import 'package:servi_connect/main.dart';
 
 part 'viewChatStates.dart';
 
@@ -26,16 +27,16 @@ class ViewChatCubit extends Cubit<ViewChatState> {
 
   void addMessageToScreen() {
     ViewChatEntity viewChatEntity =
-        ViewChatEntity(text: chatController.text, createdAt: 'createdAt');
+        ViewChatEntity(text: chatController.text, createdAt: 'createdAt', user: null, expert: null, sender: prefs?.getString('id'));
     messages!.add(viewChatEntity);
 
     emit(ViewChatSuccess(messages!));
-    chatController.clear();
+    
   }
 
   void setRealTimeData(value) {
     ViewChatEntity viewChatEntity =
-        ViewChatEntity(text: value['text'], createdAt: 'createdAt');
+        ViewChatEntity(text: value['text'], createdAt: 'createdAt', user: null, expert: null, sender: prefs?.getString('id'));
     messages!.add(viewChatEntity);
     emit(ViewChatSuccess(messages!));
   }

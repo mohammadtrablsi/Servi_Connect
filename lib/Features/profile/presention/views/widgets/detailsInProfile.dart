@@ -1,14 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:servi_connect/Features/Profile/domain/entites/ProfileEntity.dart';
-
-
 
 import 'package:sizer/sizer.dart';
 
 import '../../../../../constants.dart';
-
 
 class DetailsInProfile extends StatelessWidget {
   DetailsInProfile({super.key, required this.data});
@@ -39,12 +34,16 @@ class DetailsInProfile extends StatelessWidget {
                         SizedBox(
                           width: 2.w,
                         ),
-
-                        index == 0?containtOfLabel(list[index]['icon'],'user'):
-                        index == 1?containtOfLabel(list[index]['icon'],'${data.firstName}${data.lastName}'):
-                        index == 2?containtOfLabel(list[index]['icon'],data.email):
-                        containtOfLabel(list[index]['icon'],data.email),
-                          
+                        index == 0
+                            ? containtOfLabel(list[index]['icon'], 'user')
+                            : index == 1
+                                ? containtOfLabel(list[index]['icon'],
+                                    '${data.firstName}${data.lastName}')
+                                : index == 2
+                                    ? containtOfLabel(
+                                        list[index]['icon'], data.email)
+                                    : containtOfLabel(
+                                        list[index]['icon'], data.phone),
                       ],
                     ),
                   ))),

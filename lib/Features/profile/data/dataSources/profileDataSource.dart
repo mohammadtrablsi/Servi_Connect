@@ -22,7 +22,7 @@ class ProfileRemoteDataSourceImpl extends ProfileRemoteDataSource {
         data: request, endPoint: 'http://10.0.2.2:8000/api/users', headers: headers);
     ProfileEntity entity;
     entity = ProfileModel.fromJson(response);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    
     // await prefs.setInt('userId', entity.id);
     // print("iddddddddddddddddddddddddddddddddddd${entity.id}");
     return entity;

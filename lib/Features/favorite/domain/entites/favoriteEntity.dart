@@ -4,9 +4,13 @@ class FavoriteEntity {
   final email;
   final address;
   final experence;
+  final image;
+  final idOfExpert;
 
   FavoriteEntity(
-      {required this.firstName,
+      {required this.idOfExpert,
+      required this.image,
+      required this.firstName,
       required this.lastName,
       required this.email,
       required this.address,

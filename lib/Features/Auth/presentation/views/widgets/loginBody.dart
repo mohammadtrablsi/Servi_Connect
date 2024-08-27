@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/authButton.dart';
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/authTextField.dart';
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/clipPathInAuth.dart';
+import 'package:servi_connect/main.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../constants.dart';
@@ -86,6 +87,8 @@ class LoginBody extends StatelessWidget {
                           listener: (context, state) {
                             if (state is LoginSuccess) {
                               appToast(context, 'Registration successful!');
+                              GoRouter.of(context)
+                                  .go(AppRouter.kBottomNavRoute);
                             } else if (state is LoginFailure) {
                               appToast(context, state.errMessage);
                             }
@@ -120,9 +123,7 @@ class LoginBody extends StatelessWidget {
                           await loginCubit.makeLogin({
                             "isUser":
                                 // ignore: unrelated_type_equality_checks
-                                await getRole() == 'user'
-                                    ? true
-                                    : false,
+                                await prefs?.getString('role') == 'user' ? true : false,
                             "email": loginCubit.email.text,
                             "password": loginCubit.password.text
                           }, loginCubit.formstate, context);

@@ -33,7 +33,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFailure(failure.message));
     }, (_) {
       emit(LoginSuccess());
-      GoRouter.of(context).go(AppRouter.kBottomNavRoute);
+      
     });
   }
 

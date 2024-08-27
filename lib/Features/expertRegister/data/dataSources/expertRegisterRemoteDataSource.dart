@@ -4,13 +4,11 @@ import 'package:servi_connect/Features/expertRegister/data/models/expertRegister
 import 'package:servi_connect/Features/expertRegister/domain/entites/categoryEntity.dart';
 import 'package:servi_connect/Features/expertRegister/domain/entites/expertRegisterEntity.dart';
 import 'package:servi_connect/core/utils/api_service.dart';
+import 'package:servi_connect/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 abstract class ExpertRegisterRemoteDataSource {
-  Future<ExpertRegisterEntity> makeExpertRegister(
-      {required FormData request});
+  Future<ExpertRegisterEntity> makeExpertRegister({required FormData request});
   Future<List<CategoryEntity>> viewCategory();
 }
 
@@ -30,7 +28,10 @@ class ExpertRegisterRemoteDataSourceImpl
         headers: {});
     ExpertRegisterEntity entity;
     entity = ExpertRegisterModel.fromJson(response);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs?.setString('token', entity.token ?? "noToken");
+    await prefs?.setString('id', entity.id ?? "noId");
+    
+
     // await prefs.setInt('userId', entity.id);
     // print("iddddddddddddddddddddddddddddddddddd${entity.id}");
     return entity;

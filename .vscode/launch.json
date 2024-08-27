@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+      {
+        "name": "Flutter without Debugging",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/main.dart",
+        "flutterMode": "debug", //depending on your preference
+        // "deviceId": "emulator-5554" // Replace with your emulator or device ID
+      }
+    ]
+  }
+//   {
+//     // Use IntelliSense to learn about possible attributes.//past
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+    
+//         {
+//             "type": "chrome",
+//             "request": "launch",
+//             "name": "Launch Chrome against localhost",
+//             "url": "http://localhost:8080",
+//             "webRoot": "${workspaceFolder}"
+//         }
+//     ]
+// }  

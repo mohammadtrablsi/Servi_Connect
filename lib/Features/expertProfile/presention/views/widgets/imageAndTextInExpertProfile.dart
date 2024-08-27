@@ -6,15 +6,18 @@ import 'package:sizer/sizer.dart';
 import '../../../../../core/utils/app_router.dart';
 
 class ImageAndTextInExpertProfile extends StatelessWidget {
-  ImageAndTextInExpertProfile({super.key, this.data});
-  final data;
+  ImageAndTextInExpertProfile(
+      {super.key, this.name, this.image, required this.idOfAnother});
+  final name;
+  final String? image;
   final List contactsList = [Icons.chat, Icons.call];
+  final String idOfAnother;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        image(),
+        imagePart(),
         SizedBox(
           width: 4.w,
         ),
@@ -23,13 +26,13 @@ class ImageAndTextInExpertProfile extends StatelessWidget {
     );
   }
 
-  Widget image() {
+  Widget imagePart() {
     return Container(
       width: 32.w,
       height: 22.h,
       decoration: BoxDecoration(
-          image: const DecorationImage(
-              image: AssetImage(AssetsData.toDo2), fit: BoxFit.cover),
+          image: DecorationImage(
+              image: NetworkImage(image ?? ""), fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(20.sp),
           border: Border.all(width: 0.31.h, color: kPrimaryColor)),
     );
@@ -40,7 +43,7 @@ class ImageAndTextInExpertProfile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          data,
+          name,
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
         SizedBox(
@@ -52,13 +55,13 @@ class ImageAndTextInExpertProfile extends StatelessWidget {
             (index) => Padding(
               padding: EdgeInsetsDirectional.only(end: 4.w),
               child: InkWell(
-                onTap: () => AppRouter.router.push(AppRouter.kChatRoute),
+                onTap: () => AppRouter.router.push("${AppRouter.kChatRoute}?idOfAnother=$idOfAnother"),
                 child: Container(
                   width: 7.w,
                   height: 3.h,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3.sp),
-                      color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4.sp),
+                      color: Colors.grey.withOpacity(0.5)),
                   child: Center(
                     child: Icon(
                       contactsList[index],

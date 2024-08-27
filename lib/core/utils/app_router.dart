@@ -24,12 +24,11 @@ abstract class AppRouter {
   static const kChatRoute = '/chat';
   static const kSearchRoute = '/search';
 
-
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const UsersChatsForExpert(),
+        builder: (context, state) => const ChooseRole(),
       ),
       GoRoute(
         path: kRegisterRoute,
@@ -76,22 +75,30 @@ abstract class AppRouter {
             final address = state.queryParams['address'];
             final email = state.queryParams['email'];
             final phone = state.queryParams['phone'];
+            final image = state.queryParams['image'];
+            final idOfExpert = state.queryParams['idOfExpert'];
             return ExpertProfile(
                 name: name!,
                 exprience: exprience!,
                 address: address!,
                 email: email!,
-                phone: phone!);
+                phone: phone!,
+                image: image!,
+                idOfExpert: idOfExpert!);
           }),
       GoRoute(
-        path: kChatRoute,
-        builder: (context, state) => const Chat(),
-      ),
+          path: kChatRoute,
+          builder: (context, state) {
+            final idOfAnother = state.queryParams['idOfAnother'];
+           return  Chat(
+              idOfAnother: idOfAnother!,
+            );
+          }),
       GoRoute(
         path: kSearchRoute,
         builder: (context, state) => const Search(),
       ),
-      
+
       // GoRoute(
       //   path: kTasksView,
       //   builder: (context, state) => const Tasks(),

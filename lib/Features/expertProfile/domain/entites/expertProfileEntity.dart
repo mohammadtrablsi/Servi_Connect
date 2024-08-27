@@ -1,4 +1,4 @@
-class SearchEntity {
+class ExpertProfileEntity {
   final firstName;
   final lastName;
   final email;
@@ -7,7 +7,7 @@ class SearchEntity {
   final image;
   final idOfExpert;
 
-  SearchEntity(
+  ExpertProfileEntity(
       {required this.idOfExpert,
       required this.image,
       required this.firstName,

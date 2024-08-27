@@ -9,6 +9,7 @@ import 'package:servi_connect/Features/favorite/presention/mangers/favoriteCubit
 import 'package:servi_connect/Features/favorite/presention/views/widgets/favoriteBody.dart';
 import 'package:servi_connect/core/utils/api_service.dart';
 import 'package:servi_connect/core/utils/functions/setup_service_locator.dart';
+import 'package:servi_connect/main.dart';
 
 import '../../data/repos/FavoriteRepoImp.dart';
 
@@ -30,10 +31,7 @@ class Favorite extends StatelessWidget {
             FavoriteUseCase(
               favoriteRepo: favoriteRepoImpl,
             ),
-          )..viewFavorite(headers: {
-              'token':
-                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
-            });
+          )..viewFavorite(headers: {'token': prefs?.getString('token')});
         },
         child: const FavoriteBody(),
       ),

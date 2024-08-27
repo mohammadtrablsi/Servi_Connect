@@ -5,9 +5,12 @@ class ProfileEntity {
   final email;
   final address;
   final experence;
+  final image;
+  final phone;
 
   ProfileEntity(
-      {required this.message,
+      {required this.phone,this.image,
+      required this.message,
       required this.firstName,
       required this.lastName,
       required this.email,

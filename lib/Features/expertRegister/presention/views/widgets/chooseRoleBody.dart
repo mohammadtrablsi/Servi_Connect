@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servi_connect/constants.dart';
+import 'package:servi_connect/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -98,8 +99,6 @@ class ChooseRoleBody extends StatelessWidget {
   }
 
   Future setRole(String role) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('role', role);
+    await prefs?.setString('role', role);
   }
-
 }

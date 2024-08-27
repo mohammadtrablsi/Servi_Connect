@@ -1,8 +1,6 @@
-
-
 import 'package:servi_connect/Features/home/domain/entites/expertsByCatEntity.dart';
 
-class ExpertsByCatModel extends ExpertsByCatEntity{
+class ExpertsByCatModel extends ExpertsByCatEntity {
   String? sId;
   Expert? expert;
   List<String>? category;
@@ -18,6 +16,8 @@ class ExpertsByCatModel extends ExpertsByCatEntity{
       this.updatedAt,
       this.iV})
       : super(
+            idOfExpert:expert!.sId,
+            image: expert!.profileImage,
             firstName: expert!.firstName,
             lastName: expert.lastName,
             email: expert.email,
@@ -62,6 +62,7 @@ class Expert {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? profileImage;
 
   Expert(
       {this.sId,
@@ -74,7 +75,8 @@ class Expert {
       this.category,
       this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.iV,
+      this.profileImage});
 
   Expert.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -88,6 +90,7 @@ class Expert {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    profileImage = json['profileImage'];
   }
 
   Map<String, dynamic> toJson() {

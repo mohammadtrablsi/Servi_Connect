@@ -5,8 +5,11 @@ class ExpertsByCatEntity {
   final address;
   final experence;
   final category;
+  final image;
+  final idOfExpert;
   ExpertsByCatEntity(
-      {required this.firstName,
+      {required this.idOfExpert,required this.image,
+      required this.firstName,
       required this.lastName,
       required this.email,
       required this.address,

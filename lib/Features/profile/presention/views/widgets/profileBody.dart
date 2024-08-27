@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/authButton.dart';
 import 'package:servi_connect/Features/profile/presention/mangers/profileCubit.dart';
 import 'package:servi_connect/Features/profile/presention/views/widgets/shimmerForDetailsInProfile.dart';
+import 'package:servi_connect/Features/profile/presention/views/widgets/shimmerImageInProfile.dart';
 import 'package:sizer/sizer.dart';
 
 import 'detailsInProfile.dart';
@@ -17,12 +18,30 @@ class ProfileBody extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ImageInProfile(),
-            ],
-          ),
+          BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+            if (state is ProfileLoading) {
+              return const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ShimmerImageInProfile(),
+                ],
+              );
+              ;
+            } else if (state is ProfileFailure) {
+              return const Text('error');
+            } else if (state is ProfileSuccess) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ImageInProfile(
+                    image: state.profile.image,
+                  ),
+                ],
+              );
+            } else {
+              return const SizedBox();
+            }
+          }),
           SizedBox(
             height: 4.h,
           ),

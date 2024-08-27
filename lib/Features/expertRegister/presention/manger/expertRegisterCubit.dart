@@ -13,11 +13,28 @@ class ExpertRegisterCubit extends Cubit<ExpertRegisterState> {
   TextEditingController addressController = TextEditingController();
   TextEditingController experineceController = TextEditingController();
   bool isPassword = true;
-  List<String>? listServices;
+  List<String> listServices = [];
 
   final ExpertRegisterUseCase expertRegisterUseCase;
   Future<void> makeExpertRegister(
       FormData data, formstate, BuildContext context) async {
+    for (var entry in data.fields) {
+      print('Field: ${entry.key} = ${entry.value}');
+    }
+
+    for (var entry in data.files) {
+      var key = entry.key;
+      var fileFuture = entry.value;
+
+      // Await the future to get the MultipartFile
+      MultipartFile file = await fileFuture;
+
+      print('File: $key');
+      print('Filename: ${file.filename}');
+      print('Content Type: ${file.contentType}');
+      // print('File Size: ${await file.length()} bytes');
+    }
+
     if (checkValidationOfEnterData(formstate)) {
       mangeStateOfPostData(data).then((value) async {
         await Future.delayed(const Duration(seconds: 1));

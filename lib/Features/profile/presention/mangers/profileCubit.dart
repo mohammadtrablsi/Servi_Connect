@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:servi_connect/Features/Profile/domain/entites/ProfileEntity.dart';
+
 
 
 
 
 import 'package:servi_connect/Features/Profile/domain/useCases/profileUseCase.dart';
+import 'package:servi_connect/Features/Profile/domain/entites/ProfileEntity.dart';
+
 
 
 

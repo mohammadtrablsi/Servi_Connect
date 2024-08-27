@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:servi_connect/Features/expertProfile/domain/entites/expertProfileEntity.dart';
 import 'package:servi_connect/Features/expertProfile/domain/entites/makeFavoriteEntity.dart';
 import 'package:servi_connect/Features/expertProfile/domain/repos/expertProfileRepo.dart';
 
@@ -28,6 +29,26 @@ class ExpertProfileRepoImpl extends ExpertProfileRepo {
         return left(ServerFailure(e.toString()));
       }
       print('333333333333333333333');
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ExpertProfileEntity>> getExpertById(
+      {required Map<String, dynamic> request,
+      required Map<String, dynamic> headers}) async {
+    ExpertProfileEntity entity;
+    try {
+      entity = await expertProfileRemoteDataSource.getExpertById(
+          request: request, headers: headers);
+      print('1111111111111111111111');
+      return right(entity);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      print('333333333333333333333');
+      print(e.toString());
       return left(ServerFailure(e.toString()));
     }
   }

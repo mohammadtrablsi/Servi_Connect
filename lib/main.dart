@@ -5,13 +5,18 @@ import 'package:servi_connect/constants.dart';
 import 'package:servi_connect/core/utils/app_router.dart';
 import 'package:servi_connect/core/utils/functions/getRole.dart';
 import 'package:servi_connect/core/utils/simple_bloc_observer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'core/utils/functions/setup_service_locator.dart';
 
 String? role;
+SharedPreferences? prefs;
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+  print(prefs?.getString("token"));
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityAdapter());
 
@@ -19,7 +24,7 @@ void main() async {
   await Hive.openBox<TaskEntity>(kTasksBox);
 
   Bloc.observer = SimpleBlocObserver();
-  role = await getRole();
+  role = await prefs?.getString('role');
 
   runApp(const PowerOfTask());
 }

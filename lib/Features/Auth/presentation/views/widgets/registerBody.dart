@@ -10,6 +10,7 @@ import 'package:servi_connect/Features/Auth/presentation/views/widgets/authTextF
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/clipPathInAuth.dart';
 import 'package:servi_connect/Features/Auth/presentation/views/widgets/imageInRegister.dart';
 import 'package:servi_connect/core/utils/functions/getRole.dart';
+import 'package:servi_connect/main.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../core/utils/app_router.dart';
@@ -162,8 +163,10 @@ class RegisterBody extends StatelessWidget {
                                     if (state is RegisterSuccess) {
                                       appToast(
                                           context, 'Registration successful!');
+                                      AppRouter.router
+                                          .push(AppRouter.kBottomNavRoute);
                                     } else if (state is RegisterFailure) {
-                                      appToast(context, 'stat');
+                                      appToast(context, 'faild');
                                     }
                                   },
                                   child:
@@ -195,30 +198,33 @@ class RegisterBody extends StatelessWidget {
                                 paddinghorizontal: 7.h,
                                 paddingvertical: 2.h,
                                 onpressed: () async {
-                                  if (await getRole() == 'user') {
-                                    print(await getRole());
-                                    await registerCubit
-                                        .makeUserRegister(
-                                            FormData.fromMap({
-                                              "email": registerCubit.email.text,
-                                              "password":
-                                                  registerCubit.password.text,
-                                              "lastName":
-                                                  registerCubit.lastName.text,
-                                              "firstName":
-                                                  registerCubit.firstName.text,
-                                              "phone": registerCubit.phone.text,
-                                              'profileImage':
-                                                  MultipartFile.fromFile(
-                                                      registerCubit
-                                                          .imagePicked!.path,
-                                                      filename: registerCubit
-                                                          .imagePicked!.name)
-                                            }),
-                                            registerCubit.formstate,
-                                            context)
-                                        .then((value) => AppRouter.router
-                                            .push(AppRouter.kBottomNavRoute));
+                                  if (await prefs?.getString('role') == 'user') {
+                                    // print(await getRole());
+
+                                    // Check if image is picked
+                                    if (registerCubit.imagePicked == null) {
+                                      appToast(context, "Please pick an image");
+                                      return;
+                                    }
+
+                                    await registerCubit.makeUserRegister(
+                                      FormData.fromMap({
+                                        "email": registerCubit.email.text,
+                                        "password": registerCubit.password.text,
+                                        "lastName": registerCubit.lastName.text,
+                                        "firstName":
+                                            registerCubit.firstName.text,
+                                        "phone": registerCubit.phone.text,
+                                        'profileImage':
+                                            await MultipartFile.fromFile(
+                                          registerCubit.imagePicked!.path,
+                                          filename:
+                                              registerCubit.imagePicked!.name,
+                                        ),
+                                      }),
+                                      registerCubit.formstate,
+                                      context,
+                                    );
                                   } else {
                                     AppRouter.router.push(
                                         '${AppRouter.kEnterDataOfExpertRoute}?firstName=${registerCubit.firstName.text}&&lastName=${registerCubit.lastName.text}&&email=${registerCubit.email.text}&&password=${registerCubit.password.text}&&repeatPassword=${registerCubit.repeatPassword.text}&&phone=${registerCubit.phone.text}&&image=${registerCubit.imagePicked!.path}');

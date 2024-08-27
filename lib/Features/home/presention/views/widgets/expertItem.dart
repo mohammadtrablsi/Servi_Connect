@@ -16,9 +16,10 @@ class ExpertItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(data.image);
     List listData = [];
     listData.add("${data.firstName}${data.lastName}");
-    listData.add(data.firstName);
+    listData.add(data.address);
 
     // List listData = ['2.5', 'Alexandr', 'medicine', '50'];
     return Stack(
@@ -46,9 +47,8 @@ class ExpertItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.sp),
                       color: Colors.black12,
-                      image: const DecorationImage(
-                          image: AssetImage(AssetsData.toDo2),
-                          fit: BoxFit.cover)),
+                      image: DecorationImage(
+                          image: NetworkImage(data.image), fit: BoxFit.cover)),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -60,14 +60,22 @@ class ExpertItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(listData.length, (index) {
                         return Container(
-                          // padding: EdgeInsets.only(top: 0.2, bottom: 0.2.h),
+                          padding: EdgeInsets.only(
+                              top: index == 1 ? 0.2 : 0,
+                              bottom: index == 1 ? 0.2.h : 0,
+                              left: index == 1 ? 1.w : 0),
                           constraints: BoxConstraints(maxWidth: 50.w),
                           child: Text(
                             listData[index],
-                            style: TextStyle(
-                                fontSize: 11.sp,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold),
+                            style: index == 0
+                                ? TextStyle(
+                                    fontSize: 11.sp,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)
+                                : TextStyle(
+                                    fontSize: 10.sp,
+                                    color: Colors.grey,
+                                  ),
                           ),
                         );
                       })),
@@ -84,7 +92,7 @@ class ExpertItem extends StatelessWidget {
               size: 15.sp,
             ),
             onTap: () => AppRouter.router.push(
-                '${AppRouter.kExpertProfileRoute}?name=${data.firstName}${data.lastName}&&exprience=${data.experence}&&address=${data.address}&&email=${data.email}&&phone=${data.email}'),
+                '${AppRouter.kExpertProfileRoute}?name=${data.firstName}${data.lastName}&&exprience=${data.experence}&&address=${data.address}&&email=${data.email}&&phone=${data.email}&&image=${data.image}&&idOfExpert=${data.idOfExpert}'),
           ),
         ),
       ],

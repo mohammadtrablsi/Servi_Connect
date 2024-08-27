@@ -1,8 +1,6 @@
-
-
 import 'package:servi_connect/Features/search/domain/entites/searchEntity.dart';
 
-class SearchModel extends SearchEntity{
+class SearchModel extends SearchEntity {
   String? sId;
   String? firstName;
   String? lastName;
@@ -12,6 +10,7 @@ class SearchModel extends SearchEntity{
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? profileImage;
 
   SearchModel(
       {this.sId,
@@ -22,13 +21,16 @@ class SearchModel extends SearchEntity{
       this.experence,
       this.createdAt,
       this.updatedAt,
-      this.iV})
+      this.iV,
+      this.profileImage})
       : super(
+        idOfExpert: sId,
             firstName: firstName,
             lastName: lastName,
             email: email,
             address: address,
-            experence: experence);
+            experence: experence,
+            image: profileImage);
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
         sId: json['_id'],
@@ -39,7 +41,8 @@ class SearchModel extends SearchEntity{
         experence: json['experence'],
         createdAt: json['createdAt'],
         updatedAt: json['updatedAt'],
-        iV: json['__v']
+        iV: json['__v'],
+        profileImage: json['profileImage'],
       );
 
   Map<String, dynamic> toJson() {

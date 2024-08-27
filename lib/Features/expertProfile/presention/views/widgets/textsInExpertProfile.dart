@@ -37,7 +37,7 @@ class TextsInExpertProfile extends StatelessWidget {
           height: 2.h,
         ),
         label(Icons.info_outline, 'about'),
-        Text('text text text text text text',
+        Text(exprience,
             style: TextStyle(
                 color: Colors.black54,
                 height: 1.2,
@@ -89,12 +89,10 @@ class TextsInExpertProfile extends StatelessWidget {
                         padding: EdgeInsetsDirectional.only(start: 7.w),
                         child: Text(
                           index == 0
-                              ? exprience
+                              ? address
                               : index == 1
-                                  ? address
-                                  : index == 2
-                                      ? email
-                                      : phone,
+                                  ? email
+                                  : "0999999888",
                           style: textsUnderLabelStyle,
                         ),
                       ),

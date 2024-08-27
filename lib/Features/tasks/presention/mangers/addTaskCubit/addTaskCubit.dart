@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:servi_connect/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../constants.dart';
@@ -69,8 +70,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   }
 
   Future<int?> getUserId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = await prefs.getInt('userId');
+    int? userId = await prefs?.getInt('userId');
     return userId;
   }
 

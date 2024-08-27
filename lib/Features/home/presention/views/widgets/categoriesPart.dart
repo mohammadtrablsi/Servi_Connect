@@ -5,6 +5,7 @@ import 'package:servi_connect/Features/home/domain/entites/categoryEntity.dart';
 import 'package:servi_connect/Features/home/presention/mangers/expertByCatCubit.dart';
 import 'package:servi_connect/Features/home/presention/views/widgets/availbleServicesPart.dart';
 import 'package:servi_connect/Features/home/presention/views/widgets/categoriesItem.dart';
+import 'package:servi_connect/main.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:servi_connect/Features/home/presention/mangers/categoryCubit.dart';
@@ -46,8 +47,7 @@ class CategoriesPart extends StatelessWidget {
                     categoryCubit.setNumberAndIdOfPressed(
                         index, data[index].id);
                     expertsByCatCubit.viewExpertsByCat({
-                      'token':
-                          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
+                      'token': prefs?.getString('token')
                     }, {
                       'id': categoryCubit.idOfPressed,
                     });

@@ -6,13 +6,7 @@ import 'package:servi_connect/Features/home/domain/entites/AdsEntity.dart';
 import 'package:servi_connect/Features/home/domain/entites/expertsByCatEntity.dart';
 import 'package:servi_connect/Features/home/domain/Repos/homeRepo.dart';
 
-
-
-
-
 import 'package:servi_connect/core/errors/failure.dart';
-
-
 
 class HomeRepoImpl extends HomeRepo {
   final HomeRemoteDataSource homeRemoteDataSource;
@@ -54,12 +48,13 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<ExpertsByCatEntity>>> viewExpertsByCat(Map<String, dynamic> headers,Map<String, dynamic> data) async {
+  Future<Either<Failure, List<ExpertsByCatEntity>>> viewExpertsByCat(
+      Map<String, dynamic> headers, Map<String, dynamic> data) async {
     List<ExpertsByCatEntity> entity;
     try {
-      entity = await homeRemoteDataSource.viewExpertsByCat(headers,data);
-      // print(entity.token);
-      return right(entity);
+    entity = await homeRemoteDataSource.viewExpertsByCat(headers, data);
+    // print(entity.token);
+    return right(entity);
     } catch (e) {
       if (e is DioException) {
         print(e.toString());

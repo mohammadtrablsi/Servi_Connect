@@ -54,7 +54,9 @@ class UsersChatsForExpertBody extends StatelessWidget {
                       return Padding(
                         padding: EdgeInsetsDirectional.only(bottom: 2.w),
                         child: UserItem(
-                            data: state.viewUsersChatForexperts[index]),
+                          data: state.viewUsersChatForexperts[index],
+                          idOfAnother: state.viewUsersChatForexperts[index].id,
+                        ),
                       );
                     },
                   ),

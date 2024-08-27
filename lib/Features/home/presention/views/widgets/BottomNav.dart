@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:servi_connect/Features/chat/presention/views/usersChatsForExpert.dart';
+import 'package:servi_connect/Features/expertProfile/presention/views/expertProfile.dart';
 import 'package:servi_connect/Features/favorite/presention/views/favorite.dart';
 import 'package:servi_connect/Features/home/presention/views/home.dart';
 import 'package:servi_connect/Features/profile/presention/views/profile.dart';
@@ -22,7 +23,11 @@ class _BottomNavState extends State<BottomNav> {
     const Home(),
     const Favorite(),
     const UsersChatsForExpert(),
-    const Profile()
+    prefs?.getString('role') == "user"
+        ? const Profile()
+        : const ExpertProfile(
+            isMyExpertProfile: true,
+          )
   ];
   int pageIndex = 0;
   // Assuming role can be null or non-null
@@ -47,7 +52,7 @@ class _BottomNavState extends State<BottomNav> {
       ),
     ];
 
-    if (role == 'expert') {
+    if (prefs?.getString('role') == 'expert') {
       tabs.insert(
         2,
         GButton(

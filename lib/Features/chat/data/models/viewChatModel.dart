@@ -8,6 +8,7 @@ class viewChatModel extends ViewChatEntity {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String?sender;
 
   viewChatModel(
       {this.sId,
@@ -16,8 +17,8 @@ class viewChatModel extends ViewChatEntity {
       this.text,
       this.createdAt,
       this.updatedAt,
-      this.iV})
-      : super(text: text, createdAt: createdAt);
+      this.iV,this.sender})
+      : super(text: text, createdAt: createdAt,user:user,expert:expert,sender:sender);
 
   factory viewChatModel.fromJson(Map<String, dynamic> json) => viewChatModel(
       sId: json['_id'],
@@ -26,7 +27,8 @@ class viewChatModel extends ViewChatEntity {
       text: json['text'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      iV: json['__v']);
+      iV: json['__v'],
+      sender: json['sender']);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

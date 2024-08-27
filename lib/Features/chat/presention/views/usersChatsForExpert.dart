@@ -5,6 +5,7 @@ import 'package:servi_connect/Features/chat/domain/useCases/viewUsersChatForexpe
 import 'package:servi_connect/Features/chat/presention/mangers/viewUsersChatForexpertCubit.dart';
 import 'package:servi_connect/Features/chat/presention/views/widgets/usersChatsForExpertBody.dart';
 import 'package:servi_connect/core/utils/functions/setup_service_locator.dart';
+import 'package:servi_connect/main.dart';
 
 class UsersChatsForExpert extends StatelessWidget {
   const UsersChatsForExpert({super.key});
@@ -18,12 +19,8 @@ class UsersChatsForExpert extends StatelessWidget {
             ViewUsersChatForexpertUseCase(
               chatRepo: getIt.get<ChatRepoImpl>(),
             ),
-          )..viewViewUsersChatForexpert(headers: {
-              'token':
-                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
-            }, data: {
-              "id": "6644bdffd078b7fc6d634016"
-            });
+          )..viewViewUsersChatForexpert(
+              headers: {'token': prefs?.getString('token')}, data: {});
         },
         child: const UsersChatsForExpertBody(),
       ),

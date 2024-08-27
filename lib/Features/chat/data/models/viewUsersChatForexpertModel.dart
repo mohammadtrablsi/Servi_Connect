@@ -7,7 +7,10 @@ class ViewUsersChatForexpertModel extends ViewUsersChatForexpertEntity {
 
   ViewUsersChatForexpertModel({this.user, this.text, this.createdAt})
       : super(
-            firstName: user!.firstName, lastName: user.lastName, id: user.sId);
+            firstName: user!.firstName,
+            lastName: user.lastName,
+            id: user.sId,
+            image: user.profileImage);
 
   factory ViewUsersChatForexpertModel.fromJson(Map<String, dynamic> json) =>
       ViewUsersChatForexpertModel(
@@ -36,9 +39,11 @@ class User {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? profileImage;
 
   User(
-      {this.sId,
+      {this.profileImage,
+      this.sId,
       this.email,
       this.firstName,
       this.lastName,
@@ -57,6 +62,7 @@ class User {
     phone = json['phone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    profileImage = json['profileImage'];
     iV = json['__v'];
   }
 

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servi_connect/Features/chat/domain/entites/viewChatEntity.dart';
 import 'package:servi_connect/Features/chat/presention/mangers/makeChatCubit.dart';
 import 'package:servi_connect/Features/chat/presention/mangers/socketChatCubit.dart';
 import 'package:servi_connect/Features/chat/presention/mangers/viewChatCubit.dart';
 import 'package:servi_connect/Features/chat/presention/views/widgets/textFieldOfChat.dart';
 import 'package:servi_connect/constants.dart';
+import 'package:servi_connect/main.dart';
 import 'package:sizer/sizer.dart';
 // import 'package:timeago/timeago.dart' as timeago;
 
 class ChatBody extends StatelessWidget {
-  const ChatBody({super.key, required this.realTimeData});
+  const ChatBody(
+      {super.key, required this.realTimeData, required this.idOfAnother});
   final realTimeData;
+  final String idOfAnother;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,10 @@ class ChatBody extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
             onPressed: () {
-              // Get.back();
+              context.pop();
             },
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.arrow_back_ios_new,
             )),
         title: Text(
           'chat',
@@ -60,91 +64,11 @@ class ChatBody extends StatelessWidget {
                     return Column(
                       children: [
                         // AMessage(),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.w, vertical: 2.h),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                transform:
-                                    Matrix4.translationValues(0.0, 2.5.h, 0.0),
-                                width: 10.0.w,
-                                height: 10.0.w,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kPrimaryColor,
-                                ),
-                                child: Center(
-                                    child: Text(
-                                  'data',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20.sp),
-                                )),
-                              ),
-                              SizedBox(width: 2.w),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Stack(
-                                      alignment: Alignment.bottomRight,
-                                      children: [
-                                        Material(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              bottomRight: Radius.circular(30),
-                                              topRight: Radius.circular(30),
-                                            ),
-                                            elevation: 5,
-                                            color: Colors.white,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 20),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("",
-                                                      style: TextStyle(
-                                                        fontSize: 11.5.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black54,
-                                                      )),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .only(
-                                                                bottom: 0.8.w),
-                                                    child: Text(
-                                                      state.ViewChats[index]
-                                                          .text,
-                                                      style: TextStyle(
-                                                        fontSize: 11.5.sp,
-                                                        color: Colors.black45,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                        Padding(
-                                          padding: EdgeInsetsDirectional.only(
-                                              end: 4.w, bottom: 0.9.w),
-                                          child: const Text(' '),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        message(
+                            state,
+                            index,
+                            state.ViewChats[index].sender ==
+                                prefs?.getString('id'))
                       ],
                     );
                   },
@@ -160,23 +84,110 @@ class ChatBody extends StatelessWidget {
             onpressed: () {
               viewChatCubit.addMessageToScreen();
               socketChatCubit.SocketSocketChat(headers: {
-                'token':
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
+                'token': prefs?.getString('token')
               }, data: {
-                "userId": "667c5faeb0ecf3b6cf29b2f1",
+                "userId": idOfAnother, //"667c5faeb0ecf3b6cf29b2f1"
                 "text": viewChatCubit.chatController.text,
               });
               makeChatCubit.MakeMakeChat(headers: {
-                'token':
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
+                'token': prefs?.getString('token')
               }, data: {
-                "isUser": true,
-                "id": "6644bdffd078b7fc6d634016",
+                "isUser": prefs?.getString('role') == 'user',
+                "id": idOfAnother,
                 "text": viewChatCubit.chatController.text,
               });
+              viewChatCubit.chatController.clear();
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget message(state, index, isMe) {
+    return Directionality(
+      textDirection: isMe ? TextDirection.ltr : TextDirection.rtl,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Container(
+            //   transform: Matrix4.translationValues(0.0, 2.5.h, 0.0),
+            //   width: 10.0.w,
+            //   height: 10.0.w,
+            //   decoration: const BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     color: kPrimaryColor,
+            //   ),
+            //   child: Center(
+            //       child: Text(
+            //     'u',
+            //     style: TextStyle(color: Colors.white, fontSize: 20.sp),
+            //   )),
+            // ),
+            // SizedBox(width: 2.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Material(
+                          borderRadius: BorderRadius.only(
+                            topLeft: const Radius.circular(30),
+                            bottomRight: isMe
+                                ? const Radius.circular(30)
+                                : const Radius.circular(0),
+                            topRight: const Radius.circular(30),
+                            bottomLeft: isMe
+                                ? const Radius.circular(0)
+                                : const Radius.circular(30),
+                          ),
+                          elevation: 5,
+                          color: isMe
+                              ? const Color.fromARGB(255, 209, 205, 205)
+                              : const Color.fromARGB(255, 150, 191, 211),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("",
+                                    style: TextStyle(
+                                      fontSize: 11.5.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54,
+                                    )),
+                                Padding(
+                                  padding:
+                                      EdgeInsetsDirectional.only(bottom: 0.8.w),
+                                  child: Text(
+                                    state.ViewChats[index].text,
+                                    style: TextStyle(
+                                      fontSize: 11.5.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.only(end: 4.w, bottom: 0.9.w),
+                        child: const Text(' '),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

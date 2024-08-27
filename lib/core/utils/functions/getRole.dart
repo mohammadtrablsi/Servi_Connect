@@ -1,6 +1,6 @@
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:servi_connect/main.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
-Future getRole() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('role');
-}
+// Future getRole() async {
+//   return prefs?.getString('role');
+// }

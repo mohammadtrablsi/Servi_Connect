@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:servi_connect/Features/chat/domain/entites/viewUsersChatForexpertEntity.dart';
 import 'package:servi_connect/Features/search/domain/entites/searchEntity.dart';
 import 'package:servi_connect/core/utils/assets.dart';
@@ -7,8 +8,9 @@ import 'package:sizer/sizer.dart';
 import '../../../../../core/utils/app_router.dart';
 
 class UserItem extends StatelessWidget {
-  const UserItem({super.key, required this.data});
+  const UserItem({super.key, required this.data, required this.idOfAnother});
   final ViewUsersChatForexpertEntity data;
+  final String idOfAnother;
 
   //  final List<String> text;
   // final String imageUrl;
@@ -17,8 +19,9 @@ class UserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("idhfhfhfhf$idOfAnother");
     List listData = [];
-    listData.add("${data.id}");
+    listData.add("${data.firstName}${data.lastName}");
     // listData.add(data.firstName);
 
     // List listData = ['2.5', 'Alexandr', 'medicine', '50'];
@@ -47,9 +50,8 @@ class UserItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.sp),
                       color: Colors.black12,
-                      image: const DecorationImage(
-                          image: AssetImage(AssetsData.toDo2),
-                          fit: BoxFit.cover)),
+                      image: DecorationImage(
+                          image: NetworkImage(data.image), fit: BoxFit.cover)),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -84,7 +86,8 @@ class UserItem extends StatelessWidget {
               Icons.arrow_forward_ios_outlined,
               size: 15.sp,
             ),
-            onTap: () => AppRouter.router.push(AppRouter.kChatRoute),
+            onTap: () => AppRouter.router
+                .push("${AppRouter.kChatRoute}?idOfAnother=$idOfAnother"),
           ),
         ),
       ],

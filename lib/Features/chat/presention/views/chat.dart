@@ -8,12 +8,14 @@ import 'package:servi_connect/Features/chat/presention/mangers/socketChatCubit.d
 import 'package:servi_connect/Features/chat/presention/mangers/viewChatCubit.dart';
 import 'package:servi_connect/core/socketServices.dart';
 import 'package:servi_connect/core/utils/functions/setup_service_locator.dart';
+import 'package:servi_connect/main.dart';
 
 import '../../domain/useCases/SocketChatUseCase.dart';
 import 'widgets/chatBody.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({super.key});
+  const Chat({super.key, required this.idOfAnother});
+  final String idOfAnother;
 
   @override
   State<Chat> createState() => _ChatState();
@@ -36,7 +38,8 @@ class _ChatState extends State<Chat> {
             socketMessage = data;
           })
         };
-    socketService.joinSession("667c5faeb0ecf3b6cf29b2f1");
+    socketService
+        .joinSession(prefs!.getString('id')!); //667c5faeb0ecf3b6cf29b2f1
   }
 
   @override
@@ -46,17 +49,20 @@ class _ChatState extends State<Chat> {
         providers: [
           BlocProvider(
             create: (BuildContext context) {
+              print("gggggggggggggggggggggg${widget.idOfAnother}");
+              print(
+                prefs?.getString('role'),
+              );
               return ViewChatCubit(
                 ViewChatUseCase(
                   chatRepo: getIt.get<ChatRepoImpl>(),
                 ),
               )..viewViewChat(headers: {
-                  'token':
-                      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzQ2N2M3NjNkMzRhMTc5NDQ1MzJmNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE4OTgyMzM0fQ.93wEZ8D1B4B9yS9omgH1zudyUvcDf43Gr0jIer7aydE'
+                  'token': prefs?.getString('token')
                 }, data: {
-                  "isUser": true,
-                  "id": "6644bdffd078b7fc6d634016",
-                  "id1": "6644c510b8c0fbaf276f97e5"
+                  "isUser": prefs?.getString('role') == 'user',
+                  "id": widget.idOfAnother
+                  // "id1": "6644c510b8c0fbaf276f97e5"
                 });
             },
           ),
@@ -79,7 +85,8 @@ class _ChatState extends State<Chat> {
             },
           ),
         ],
-        child: ChatBody(realTimeData: socketMessage),
+        child: ChatBody(
+            realTimeData: socketMessage, idOfAnother: widget.idOfAnother),
       ),
     );
   }

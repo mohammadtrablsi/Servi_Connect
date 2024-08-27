@@ -134,6 +134,10 @@ class EnterDataOfExpertBody extends StatelessWidget {
                   AuthButton(
                     widget: BlocListener<ExpertRegisterCubit,
                         ExpertRegisterState>(listener: (context, state) {
+                      if (state is ExpertRegisterSuccess) {
+                        appToast(context, "success");
+                        GoRouter.of(context).go(AppRouter.kBottomNavRoute);
+                      }
                       if (state is ExpertRegisterFailure) {
                         appToast(context, state.errMessage);
                       }
@@ -159,26 +163,48 @@ class EnterDataOfExpertBody extends StatelessWidget {
                     paddinghorizontal: 7.h,
                     paddingvertical: 2.h,
                     onpressed: () async {
-                      await expertRegisterCubit
-                          .makeExpertRegister(
-                              FormData.fromMap({
-                                "email": email,
-                                "firstName": firstName,
-                                "lastName": lastName,
-                                "password": password,
-                                "address":
-                                    expertRegisterCubit.addressController.text,
-                                "experence": expertRegisterCubit
-                                    .experineceController.text,
-                                "category": expertRegisterCubit.listServices,
-                                "profileImage": MultipartFile.fromFile(
-                                    image!.path,
-                                    filename: image!.name)
-                              }),
-                              expertRegisterCubit.formstate,
-                              context)
-                          .then((value) => GoRouter.of(context)
-                              .go(AppRouter.kBottomNavRoute));
+                      if (image == null) {
+                        print("No image picked.");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Please pick an image')),
+                        );
+                        return;
+                      }
+
+                      try {
+                        // Log file details
+                        // print(
+                        //     "Image path: ${expertRegisterCubit.listServices}");
+                        // print("Image name: ${image.name}");
+
+                        // Create FormData with image
+                        FormData formData = FormData.fromMap({
+                          "email": email,
+                          "firstName": firstName,
+                          "lastName": lastName,
+                          "password": password,
+                          "address": expertRegisterCubit.addressController.text,
+                          "experence":
+                              expertRegisterCubit.experineceController.text,
+                          "category": expertRegisterCubit.listServices,
+                          "profileImage": await MultipartFile.fromFile(
+                            image.path,
+                            filename: image.name,
+                            // contentType: MediaType("image", "jpeg"), // Specify content type if needed
+                          ),
+                        });
+
+                        await expertRegisterCubit.makeExpertRegister(
+                          formData,
+                          expertRegisterCubit.formstate,
+                          context,
+                        );
+                      } catch (e) {
+                        print("Error creating FormData: $e");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Failed to create FormData')),
+                        );
+                      }
                     },
                   ),
                 ],

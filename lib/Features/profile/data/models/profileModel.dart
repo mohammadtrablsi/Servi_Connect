@@ -6,6 +6,8 @@ class ProfileModel extends ProfileEntity {
 
   ProfileModel({this.message, this.user})
       : super(
+            phone: user!.phone,
+            image: user!.profileImage,
             message: message,
             firstName: user!.firstName,
             lastName: user.lastName,
@@ -37,6 +39,8 @@ class User {
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? profileImage;
+  String? phone;
 
   User(
       {this.sId,
@@ -47,7 +51,8 @@ class User {
       this.experence,
       this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.iV,
+      this.profileImage});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -59,6 +64,8 @@ class User {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    profileImage = json['profileImage'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +79,7 @@ class User {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
+    data['profileImage'] = this.profileImage;
     return data;
   }
 }

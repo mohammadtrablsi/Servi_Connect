@@ -1,6 +1,7 @@
+import 'package:servi_connect/Features/expertProfile/domain/entites/expertProfileEntity.dart';
 import 'package:servi_connect/Features/favorite/domain/entites/favoriteEntity.dart';
 
-class FavoriteModel extends FavoriteEntity {
+class ExpertProfileModel extends ExpertProfileEntity {
   String? sId;
   String? user;
   Expert? expert;
@@ -8,7 +9,7 @@ class FavoriteModel extends FavoriteEntity {
   String? updatedAt;
   int? iV;
 
-  FavoriteModel(
+  ExpertProfileModel(
       {this.sId,
       this.user,
       this.expert,
@@ -24,14 +25,16 @@ class FavoriteModel extends FavoriteEntity {
             address: expert.address,
             experence: expert.experence);
 
-  factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
-      sId: json['_id'],
-      user: json['user'],
-      expert:
-          json['expert'] != null ? new Expert.fromJson(json['expert']) : null,
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      iV: json['__v']);
+  factory ExpertProfileModel.fromJson(Map<String, dynamic> json) =>
+      ExpertProfileModel(
+          sId: json['_id'],
+          user: json['user'],
+          expert: json['expert'] != null
+              ? new Expert.fromJson(json['expert'])
+              : null,
+          createdAt: json['createdAt'],
+          updatedAt: json['updatedAt'],
+          iV: json['__v']);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
